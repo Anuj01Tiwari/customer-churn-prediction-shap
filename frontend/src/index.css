@@ -1,0 +1,39 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+@theme {
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --color-bg-deep: #0b1220;
+  --color-bg-panel: #121b2e;
+  --color-bg-panel-soft: #16213a;
+  --color-border-hair: #223049;
+
+  --color-text-primary: #e7ecf3;
+  --color-text-muted: #8592a6;
+
+  --color-signal-safe: #2dd4bf;
+  --color-signal-warn: #f5a623;
+  --color-signal-risk: #fb4b4b;
+}
+
+body {
+  background-color: var(--color-bg-deep);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+}
+
+/* Visible keyboard focus, kept subtle but clear */
+:focus-visible {
+  outline: 2px solid var(--color-signal-safe);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
