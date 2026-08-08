@@ -103,12 +103,15 @@ export default function CustomerForm({ onResult, onError, onLoadingChange }) {
     onLoadingChange(true);
     onError(null);
 
-    try {
-      const response = await fetch("http://127.0.0.1:8000/predict", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+   try {
+  const response = await fetch(
+    "https://customer-churn-prediction-shap.onrender.com/predict",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    }
+  );
 
       if (!response.ok) {
         const detail = await response.json().catch(() => null);
