@@ -1,0 +1,18 @@
+{
+  "best_params": {
+    "subsample": 0.8,
+    "reg_lambda": 3,
+    "reg_alpha": 0.1,
+    "n_estimators": 200,
+    "min_child_weight": 3,
+    "max_depth": 2,
+    "learning_rate": 0.05,
+    "gamma": 0.5,
+    "colsample_bytree": 0.8
+  },
+  "smote_params": {
+    "k_neighbors": 3
+  },
+  "optimal_threshold": 0.5169451832771301,
+  "cv_f1_score": 0.6522059931990487
+}

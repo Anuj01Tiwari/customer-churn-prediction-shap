@@ -41,21 +41,11 @@ from xgboost import XGBClassifier
 # ---------------------------------------------------------------------
 PREPROCESSOR_PATH = Path(__file__).with_name("preprocessor.joblib")
 MODEL_PATH = Path(__file__).with_name("xgb_model.json")
-CONFIG_PATH = Path(__file__).with_name("model_config.json")
 
 preprocessor = joblib.load(PREPROCESSOR_PATH)
 
 model = XGBClassifier()
 model.load_model(str(MODEL_PATH))
-
-# Tuned decision threshold (found via F1-optimal search on the test set).
-# Falls back to 0.5 if the config file is missing for any reason.
-import json as _json
-try:
-    with open(CONFIG_PATH) as _f:
-        DECISION_THRESHOLD = _json.load(_f)["decision_threshold"]
-except FileNotFoundError:
-    DECISION_THRESHOLD = 0.5
 
 # Build the SHAP explainer once too -- reused across all requests
 explainer = shap.TreeExplainer(model)
@@ -169,7 +159,7 @@ def predict_churn(customer: CustomerData):
     # STEP B: Transform raw input, then get the real probability from the model
     input_processed = preprocessor.transform(input_df)
     churn_probability = float(model.predict_proba(input_processed)[0, 1])
-    churn_prediction = "Yes" if churn_probability >= DECISION_THRESHOLD else "No"
+    churn_prediction = "Yes" if churn_probability >= 0.5 else "No"
     input_processed_df = pd.DataFrame(
         input_processed.toarray() if hasattr(input_processed, "toarray") else input_processed,
         columns=feature_names
